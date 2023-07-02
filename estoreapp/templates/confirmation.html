@@ -1,0 +1,13 @@
+{% include 'header.html' %}
+
+<div class="text-center">
+	<h1>Payment ... </h1>
+<p>
+	{% if payment_status == 'success' %}
+	<p>OK DONE</p>
+	{% else %}
+	<p>Oops, something went wrong, pls try again</p>
+	{%  endif %}
+</p>
+</div>
+{% include 'footer.html' %}

@@ -1,0 +1,56 @@
+{% include 'header.html' %}
+<!-- Breadcrumb Start -->
+        <div class="breadcrumb-wrap">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="#">Profile</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- Breadcrumb End -->
+        <!-- Profile Start -->
+        <div class="login">
+            <div class="container-fluid">
+                <div class="row">
+
+                    <div class="col-lg-2">    
+                        <div class="register-form">
+                             <ul class="list-unstyled">
+                                <li class="d-grid"><a href="{% url 'profile' %}" class="btn">Profile</a></li>
+                                <li class="d-grid"><a href="{% url 'address' %}" class="btn">Address</a></li>
+                              </ul> 
+                        </div> 
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="login-form">
+                          <form action="" method="post">
+                            {% csrf_token %}
+                            {% for fm in form %}
+                            <div class="form-group col-lg mb-3">
+                              {{fm.label_tag}}{{fm}}<small class="text-danger">{{fm.errors|striptags}}</small> 
+                            </div>
+                            {% endfor %}
+                            <div class="col-12 mt-3"> 
+                              <button class="btn mb-3" type = "submit">Submit</button>
+                            </div>
+                            
+                          </form>
+                              {% if messages %}
+                              {% for message in messages %}
+                                  <p {% if message.tags %} class="alert alert-{{message.tags}} mb-5" {% endif %}>{{message}}</p>
+                              {% endfor %}
+                              {% endif %}
+   
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Profile End -->
+        
+        <!-- Footer Start -->
+{% include 'footer.html' %}

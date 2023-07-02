@@ -1,0 +1,145 @@
+{% include 'header.html' %}
+        <!-- Checkout Start -->
+        <div class="checkout">
+            <div class="container-fluid"> 
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="checkout-inner">
+                            
+<div class="row mt-5">
+  <div class="col-sm-6">
+    <h4>Order Summary</h4>
+    <hr>
+    {% for item in cart_items %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <h5>Product: {{item.product.name}}</h5>
+          <p>Quantity: {{item.quantity}}</p>
+          <p class="fw-bold">Price: {{item.total_cost}}</p>
+        </div>
+      </div>
+      {% endfor %}
+    <small>Term and Condition: Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, ullam saepe! Iure optio repellat dolor velit, minus rem. Facilis cumque neque numquam laboriosam, accusantium adipisci nisi nihil in et quis?</small>
+  </div>
+  <div class="col-sm-4 offset-sm-1">
+    <h4>Select Address</h4>
+    <hr>
+    {% for ad in add %}
+    <form action="/paymentdone" id="myForm">
+      <div class="card">
+        <div class="card-body">
+        <h5>{{ad.name}}</h5>
+        <p>{{ad.locality}}, {{ad.city}}, {{ad.state}}</p>
+        </div>
+      </div>
+        <div class="form-check mt-2 mb-5">
+          <input class="form-check-input" type="radio" id = "cust_add{{forloop.counter}}" name = "cust_id" value="{{ad.id}}">
+          <label class="form-check-label fw-bold" for="">
+            Address: {{forloop.counter}} </label>
+        </div>
+        {% endfor %}
+        <!-- <div class="text-end">
+          <button type="submit" id = "sub" class="btn btn-warning px-5 fw-bold">Continue</button>
+        </div> -->
+      </form>
+      <!-- mera -->
+      <form action="{% url 'create-checkout-session' %}" method="POST">{% csrf_token %}
+        <button type="submit" class="btn" id="checkout-button">Pay now</button>
+      </form>
+      <!-- mera -->
+    </div>
+  </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="checkout-inner">
+                            <div class="checkout-summary">
+                                <h1>Cart Total</h1>
+                                <p>Products<span></span></p>
+                                <p class="sub-total">Sub Total<span>${{amount}}</span></p>
+                                <p class="ship-cost">Shipping Cost<span>$1</span></p>
+                                <h2>Grand Total<span>${{totalamount}}</span></h2>
+                            </div>
+
+                            <div class="checkout-payment">
+                                <div class="payment-methods">
+                                    <h1>Payment Methods</h1>
+                                    <div class="payment-method">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" id="payment-1" name="payment">
+                                            <label class="custom-control-label" for="payment-1">Paypal</label>
+                                        </div>
+                                        <div class="payment-content" id="payment-1-show">
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" id="payment-2" name="payment">
+                                            <label class="custom-control-label" for="payment-2">Payoneer</label>
+                                        </div>
+                                        <div class="payment-content" id="payment-2-show">
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" id="payment-3" name="payment">
+                                            <label class="custom-control-label" for="payment-3">Check Payment</label>
+                                        </div>
+                                        <div class="payment-content" id="payment-3-show">
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" id="payment-4" name="payment">
+                                            <label class="custom-control-label" for="payment-4">Direct Bank Transfer</label>
+                                        </div>
+                                        <div class="payment-content" id="payment-4-show">
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="payment-method">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" id="payment-5" name="payment">
+                                            <label class="custom-control-label" for="payment-5">Cash on Delivery</label>
+                                        </div>
+                                        <div class="payment-content" id="payment-5-show">
+                                            <p>
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras tincidunt orci ac eros volutpat maximus lacinia quis diam.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="checkout-btn">
+                                    <a href="{% url 'orders' %}" class="btn btn-danger btn-lg">Place Order</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Checkout End -->
+
+{% if payment_status == 'success' %}
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function (){
+    $(".form-check-input").prop("checked", true);
+    document.getElementById("myForm").submit();
+});
+</script>
+{% endif %}
+
+        <!-- Footer Start -->
+{% include 'footer.html' %}
